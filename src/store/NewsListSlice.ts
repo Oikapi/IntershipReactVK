@@ -22,9 +22,9 @@ const fetchNewsById = async (newsId: number): Promise<News> => {
   return newsDetails;
 };
 
-export const fetchNewsList = createAsyncThunk<News[], undefined, {rejectValue: string}>(
-    'newsList/fetchNewsIdList',
-    async function (_, { rejectWithValue }) {
+export const fetchNewsList = createAsyncThunk<boolean, undefined, {rejectValue: string}>(
+    'newsList/fetchNewsList',
+    async function (_, { rejectWithValue,dispatch  }) {
       const response = await fetch(`https://hacker-news.firebaseio.com/v0/newstories.json`);
       const newList:News[] = []
       if (!response.ok) {
@@ -32,16 +32,25 @@ export const fetchNewsList = createAsyncThunk<News[], undefined, {rejectValue: s
       }
       const data = await response.json();
       const idsArray = data.slice(1,100);
-      const promises = idsArray.map((id: number) => fetchNewsById(id));
-      const newsArray:News[] = await Promise.all(promises);
-      return newsArray;
+      for (const id of idsArray) {
+        const news = await fetchNewsById(id);
+        dispatch(addNewsToList(news));
+      }
+      // const newsArray:News[] = await Promise.all(promises);
+      // return newsArray;
+      return true
     }
 );
 
 const newsListSlice = createSlice({
     name: 'newsList',
     initialState,
-    reducers: {},
+    reducers: {
+      addNewsToList(state, action: PayloadAction<News>) {
+        state.list.push(action.payload);
+        state.loading = false;
+      },
+    },
     extraReducers: (builder) => {
       builder
         .addCase(fetchNewsList.pending, (state) => {
@@ -49,13 +58,14 @@ const newsListSlice = createSlice({
           state.error = false;
         })
         .addCase(fetchNewsList.fulfilled, (state, action) => {
-          state.list = action.payload;
           state.loading = false;
         })
     }
   });
 
   export default newsListSlice.reducer
+
+  export const { addNewsToList } = newsListSlice.actions;
 
   function isError(action: AnyAction) {
     return action.type.endsWith('rejected');

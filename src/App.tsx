@@ -4,8 +4,9 @@ import { View, SplitLayout, SplitCol, ScreenSpinner } from '@vkontakte/vkui';
 import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 
 import { Persik, Home } from './panels';
-import { DEFAULT_VIEW_PANELS } from './routes';
+import { DEFAULT_VIEW, DEFAULT_VIEW_PANELS } from './routes';
 import MainPanel from './panels/MainPanel/MainPanel';
+import NewsDetails from './panels/NewsDetails/NewsDetails';
 
 export const App = () => {
   const { panel: activePanel = DEFAULT_VIEW_PANELS.HOME } = useActiveVkuiLocation();
@@ -27,7 +28,7 @@ export const App = () => {
         <View activePanel={activePanel}>
           <MainPanel id="home" />
           {/* <Home id="home" fetchedUser={fetchedUser} /> */}
-          <Persik id="persik" />
+          <NewsDetails id="newsDetails" />
         </View>
       </SplitCol>
     </SplitLayout>

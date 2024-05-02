@@ -7,6 +7,16 @@ export interface News {
     text: string
     time: number
     title: string
+    type: string,
+    url : string,
+  }
+
+  export interface Comment {
+    by: string
+    id: number
+    parent: number
+    text: string
+    time: number
     type: string
   }
   

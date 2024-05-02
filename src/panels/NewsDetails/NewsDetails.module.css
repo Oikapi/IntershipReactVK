@@ -1,0 +1,13 @@
+.newsDetails {
+    padding: 40px;
+}
+
+.newsDetailsHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.newsDetailsMainInfo {
+    display: flex;
+    justify-content: space-between;
+}

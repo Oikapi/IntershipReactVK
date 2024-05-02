@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 import { fetchNewsList } from '../../store/NewsListSlice'
 import { Panel, ScreenSpinner, Spinner, SplitLayout, Tappable } from '@vkontakte/vkui'
 import styles from "./MainPanel.module.css"
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
 
 
 type MainPanelProps = {
@@ -11,10 +12,13 @@ type MainPanelProps = {
 
 function MainPanel({ id }: MainPanelProps) {
     const dispatch = useAppDispatch()
+    const routeNavigator = useRouteNavigator();
     const { loading, list } = useAppSelector(state => state.newsList)
     const [popout, setPopout] = useState<ReactElement | null>(<ScreenSpinner />)
     useEffect(() => {
-        dispatch(fetchNewsList());
+        if (!list.length) {
+            dispatch(fetchNewsList());
+        }
     }, [])
 
     useEffect(() => {
@@ -27,8 +31,8 @@ function MainPanel({ id }: MainPanelProps) {
                 <div className={styles.newsList}>
                     {
                         list.map((el) =>
-                            <Tappable onClick={() => console.log(123)} style={{ background: "#0000004D" }} >
-                                <div className={styles.newsEach}>
+                            <Tappable onClick={() => routeNavigator.push(`newsDetails/${el.id}`)} style={{ background: "#0000004D" }} >
+                                < div className={styles.newsEach} >
                                     <h2>
                                         {el.title}
                                     </h2>
@@ -39,15 +43,15 @@ function MainPanel({ id }: MainPanelProps) {
                                         by {el.by}
                                     </span>
                                     <span className={styles.newsDate}>
-                                        {new Date(el.time).toDateString()}
+                                        {new Date(el.time * 1000).toLocaleString()}
                                     </span>
                                 </div>
                             </Tappable>
                         )
                     }
                 </div>
-            </Panel>
-        </SplitLayout>
+            </Panel >
+        </SplitLayout >
     )
 }
 
