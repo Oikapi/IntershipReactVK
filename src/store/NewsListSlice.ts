@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice,PayloadAction,AnyAction } from "@reduxjs/toolkit";
-import { News } from "../commonTypes/index";
+import { Item } from "../commonTypes/index";
 
 type NewsListState = {
-    list : News[],
+    list : Item[],
     error : boolean,
     loading : boolean
 }
@@ -13,12 +13,12 @@ const initialState : NewsListState = {
   loading : false
 }
 
-const fetchNewsById = async (newsId: number): Promise<News> => {
+const fetchNewsById = async (newsId: number): Promise<Item> => {
   const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`);
   if (!response.ok) {
     throw new Error('Failed to fetch news details');
   }
-  const newsDetails:News = await response.json();
+  const newsDetails:Item = await response.json();
   return newsDetails;
 };
 
@@ -26,7 +26,7 @@ export const fetchNewsList = createAsyncThunk<boolean, undefined, {rejectValue: 
     'newsList/fetchNewsList',
     async function (_, { rejectWithValue,dispatch  }) {
       const response = await fetch(`https://hacker-news.firebaseio.com/v0/newstories.json`);
-      const newList:News[] = []
+      const newList:Item[] = []
       if (!response.ok) {
         return rejectWithValue('Server Error!');
       }
@@ -36,8 +36,7 @@ export const fetchNewsList = createAsyncThunk<boolean, undefined, {rejectValue: 
         const news = await fetchNewsById(id);
         dispatch(addNewsToList(news));
       }
-      // const newsArray:News[] = await Promise.all(promises);
-      // return newsArray;
+      
       return true
     }
 );
@@ -46,7 +45,7 @@ const newsListSlice = createSlice({
     name: 'newsList',
     initialState,
     reducers: {
-      addNewsToList(state, action: PayloadAction<News>) {
+      addNewsToList(state, action: PayloadAction<Item>) {
         state.list.push(action.payload);
         state.loading = false;
       },
@@ -54,6 +53,7 @@ const newsListSlice = createSlice({
     extraReducers: (builder) => {
       builder
         .addCase(fetchNewsList.pending, (state) => {
+          state.list = [];
           state.loading = true;
           state.error = false;
         })

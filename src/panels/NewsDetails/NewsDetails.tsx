@@ -16,12 +16,12 @@ function NewsDetails({ id }: NewsDetailsProps) {
     const dispatch = useAppDispatch()
     const params = useParams<"id">();
     const routeNavigator = useRouteNavigator();
-    const { loading, newsDetails } = useAppSelector(state => state.newsDetails)
+    const { loading, newsDetails, comments } = useAppSelector(state => state.newsDetails)
     const [popout, setPopout] = useState<ReactElement | null>(null)
     useEffect(() => {
         dispatch(fetchNewsDetails(Number(params?.id)));
     }, [])
-    console.log(newsDetails)
+    // console.log(newsDetails)
     useEffect(() => {
         setPopout(loading ? <ScreenSpinner /> : null)
     }, [loading])
@@ -48,7 +48,6 @@ function NewsDetails({ id }: NewsDetailsProps) {
                 <a href={newsDetails?.url}>Ссылка на статью</a>
                 <div>
                     <NewsComments
-                        idsComments={newsDetails?.kids || []}
                     />
                 </div>
             </Panel>

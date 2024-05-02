@@ -1,9 +1,10 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { fetchNewsList } from '../../store/NewsListSlice'
-import { Panel, ScreenSpinner, Spinner, SplitLayout, Tappable } from '@vkontakte/vkui'
+import { IconButton, Panel, ScreenSpinner, Spinner, SplitLayout, Tappable } from '@vkontakte/vkui'
 import styles from "./MainPanel.module.css"
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
+import { Icon28RefreshOutline } from '@vkontakte/icons'
 
 
 type MainPanelProps = {
@@ -15,6 +16,7 @@ function MainPanel({ id }: MainPanelProps) {
     const routeNavigator = useRouteNavigator();
     const { loading, list } = useAppSelector(state => state.newsList)
     const [popout, setPopout] = useState<ReactElement | null>(<ScreenSpinner />)
+
     useEffect(() => {
         if (!list.length) {
             dispatch(fetchNewsList());
@@ -28,6 +30,14 @@ function MainPanel({ id }: MainPanelProps) {
     return (
         <SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>
             <Panel id={id}>
+                <div className={styles.newsListHeader}>
+                    <h1>
+                        HackNews
+                    </h1>
+                    <IconButton className={styles.newsListRefresh} onClick={() => dispatch(fetchNewsList())}>
+                        <Icon28RefreshOutline />
+                    </IconButton>
+                </div>
                 <div className={styles.newsList}>
                     {
                         list.map((el) =>

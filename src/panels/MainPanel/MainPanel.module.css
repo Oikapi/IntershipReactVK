@@ -20,3 +20,16 @@
 .newsDate {
     text-align: right;
 }
+
+.newsListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.newsListRefresh {
+    /* margin-left: auto; */
+    /* margin: 20px 20px 20px auto; */
+    /* padding: 20px; */
+}
