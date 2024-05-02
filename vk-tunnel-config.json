@@ -1,0 +1,10 @@
+{
+    "app_id": "51916187",
+    "endpoints": [
+        "mobile",
+        "mvk",
+        "web",
+        "testing_group:Тестовая группа 1",
+        "testing_group:Тестовая группа 2"
+    ]
+}

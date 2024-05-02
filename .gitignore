@@ -1,0 +1,55 @@
+# Node.js
+node_modules/
+
+# Production build
+build/
+dist/
+
+# Cache files
+.cache/
+public/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw??
+*.vsix
+*.db
+*.opensdf
+*.psess
+*.vsp
+*.suo
+*.tlb
+*.tlog
+*.tlog/
+*.log
+*.pdb
+*.ilk
+*.mdf
+*.ldf
+*.bak
+*.cache
+*.class
+*.d.ts~
+*.dat
+*.gypi
+*.npmrc
+*.sln.docstates
+*.suo
+*.vcxproj*
+*.xcuserdata
+*.xcworkspace
+
+# OS-generated files
+.DS_Store
+Thumbs.db
