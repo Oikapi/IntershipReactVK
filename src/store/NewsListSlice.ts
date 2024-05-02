@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice,PayloadAction,AnyAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { Item } from "../commonTypes/index";
 
 type NewsListState = {
@@ -26,7 +26,6 @@ export const fetchNewsList = createAsyncThunk<boolean, undefined, {rejectValue: 
     'newsList/fetchNewsList',
     async function (_, { rejectWithValue,dispatch  }) {
       const response = await fetch(`https://hacker-news.firebaseio.com/v0/newstories.json`);
-      const newList:Item[] = []
       if (!response.ok) {
         return rejectWithValue('Server Error!');
       }
@@ -36,7 +35,7 @@ export const fetchNewsList = createAsyncThunk<boolean, undefined, {rejectValue: 
         const news = await fetchNewsById(id);
         dispatch(addNewsToList(news));
       }
-      
+
       return true
     }
 );
@@ -53,11 +52,12 @@ const newsListSlice = createSlice({
     extraReducers: (builder) => {
       builder
         .addCase(fetchNewsList.pending, (state) => {
+          console.log("12321")
           state.list = [];
           state.loading = true;
           state.error = false;
         })
-        .addCase(fetchNewsList.fulfilled, (state, action) => {
+        .addCase(fetchNewsList.fulfilled, (state) => {
           state.loading = false;
         })
     }
@@ -66,7 +66,3 @@ const newsListSlice = createSlice({
   export default newsListSlice.reducer
 
   export const { addNewsToList } = newsListSlice.actions;
-
-  function isError(action: AnyAction) {
-    return action.type.endsWith('rejected');
-  }

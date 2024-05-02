@@ -1,10 +1,8 @@
 import { useState, useEffect, ReactNode } from 'react';
 import bridge, { UserInfo } from '@vkontakte/vk-bridge';
-import { View, SplitLayout, SplitCol, ScreenSpinner } from '@vkontakte/vkui';
+import { View, SplitLayout, SplitCol } from '@vkontakte/vkui';
 import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
-
-import { Persik, Home } from './panels';
-import { DEFAULT_VIEW, DEFAULT_VIEW_PANELS } from './routes';
+import { DEFAULT_VIEW_PANELS } from './routes';
 import MainPanel from './panels/MainPanel/MainPanel';
 import NewsDetails from './panels/NewsDetails/NewsDetails';
 
@@ -27,7 +25,6 @@ export const App = () => {
       <SplitCol>
         <View activePanel={activePanel}>
           <MainPanel id="home" />
-          {/* <Home id="home" fetchedUser={fetchedUser} /> */}
           <NewsDetails id="newsDetails" />
         </View>
       </SplitCol>

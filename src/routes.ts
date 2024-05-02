@@ -1,9 +1,5 @@
 import {
   createHashRouter,
-  createPanel,
-  createRoot,
-  createView,
-  RoutesConfig,
   RouteWithoutRoot,
 } from '@vkontakte/vk-mini-apps-router';
 
@@ -27,16 +23,6 @@ const routes: RouteWithoutRoot[] = [
     panel: 'newsDetails',
     view: DEFAULT_VIEW,
   },
-  // Другие маршруты...
 ]
-
-// export const routes = RoutesConfig.create([
-//   createRoot(DEFAULT_ROOT, [
-//     createView(DEFAULT_VIEW, [
-//       createPanel(DEFAULT_VIEW_PANELS.HOME, '/', []),
-//       createPanel(DEFAULT_VIEW_PANELS.PERSIK, `/${DEFAULT_VIEW_PANELS.PERSIK}`, []),
-//     ]),
-//   ]),
-// ]);
 
 export const router = createHashRouter(routes);

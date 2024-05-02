@@ -1,0 +1,17 @@
+.newsEach {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Два столбца */
+    grid-gap: 10px;
+    /* Расстояние между элементами */
+    margin: 20px;
+}
+
+.newsScore {
+    text-align: right;
+}
+
+.newsDate {
+    text-align: right;
+}

@@ -5,7 +5,7 @@ import { useParams, useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
 import { fetchNewsDetails } from '../../store/NewsDetailsSlice'
 import styles from "./NewsDetails.module.css"
 import { Icon24BrowserBack } from '@vkontakte/icons'
-import NewsComments from '../../components/NewsComments/NewsComments'
+import NewsComments from '../../containers/NewsComments/NewsComments'
 
 type NewsDetailsProps = {
     id: string
@@ -16,12 +16,12 @@ function NewsDetails({ id }: NewsDetailsProps) {
     const dispatch = useAppDispatch()
     const params = useParams<"id">();
     const routeNavigator = useRouteNavigator();
-    const { loading, newsDetails, comments } = useAppSelector(state => state.newsDetails)
+    const { loading, newsDetails } = useAppSelector(state => state.newsDetails)
     const [popout, setPopout] = useState<ReactElement | null>(null)
     useEffect(() => {
         dispatch(fetchNewsDetails(Number(params?.id)));
     }, [])
-    // console.log(newsDetails)
+
     useEffect(() => {
         setPopout(loading ? <ScreenSpinner /> : null)
     }, [loading])
@@ -45,7 +45,8 @@ function NewsDetails({ id }: NewsDetailsProps) {
                         {new Date(1000 * (newsDetails?.time || 1)).toLocaleString()}
                     </h2>
                 </div>
-                <a href={newsDetails?.url}>Ссылка на статью</a>
+                <a href={newsDetails?.url}>Link to article</a>
+                <h2>Number of comments : {newsDetails?.descendants}</h2>
                 <div>
                     <NewsComments
                     />

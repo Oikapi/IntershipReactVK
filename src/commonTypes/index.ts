@@ -10,20 +10,11 @@ export interface Item{
     type: string,
     url : string,
     parent : number,
-  }
+}
 
-//   export interface Comment {
-//     by: string
-//     id: number
-//     parent: number
-//     text: string
-//     time: number
-//     type: string
-//     kids : number[]
-//   }
-
-  export interface ItemTreeNode extends Item {
-    level : number,
+export interface ItemTreeNode extends Item {
     children : ItemTreeNode[]
-  }
+}
+  
+  
   

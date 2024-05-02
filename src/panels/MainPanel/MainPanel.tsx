@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { fetchNewsList } from '../../store/NewsListSlice'
-import { IconButton, Panel, ScreenSpinner, Spinner, SplitLayout, Tappable } from '@vkontakte/vkui'
+import { IconButton, Panel, ScreenSpinner, SplitLayout } from '@vkontakte/vkui'
 import styles from "./MainPanel.module.css"
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
 import { Icon28RefreshOutline } from '@vkontakte/icons'
+import NewsEach from '../../components/NewsEach/NewsEach'
 
 
 type MainPanelProps = {
@@ -13,7 +13,6 @@ type MainPanelProps = {
 
 function MainPanel({ id }: MainPanelProps) {
     const dispatch = useAppDispatch()
-    const routeNavigator = useRouteNavigator();
     const { loading, list } = useAppSelector(state => state.newsList)
     const [popout, setPopout] = useState<ReactElement | null>(<ScreenSpinner />)
 
@@ -40,23 +39,10 @@ function MainPanel({ id }: MainPanelProps) {
                 </div>
                 <div className={styles.newsList}>
                     {
-                        list.map((el) =>
-                            <Tappable onClick={() => routeNavigator.push(`newsDetails/${el.id}`)} style={{ background: "#0000004D" }} >
-                                < div className={styles.newsEach} >
-                                    <h2>
-                                        {el.title}
-                                    </h2>
-                                    <h2 className={styles.newsScore}>
-                                        {el.score}
-                                    </h2>
-                                    <span>
-                                        by {el.by}
-                                    </span>
-                                    <span className={styles.newsDate}>
-                                        {new Date(el.time * 1000).toLocaleString()}
-                                    </span>
-                                </div>
-                            </Tappable>
+                        list.map((news) =>
+                            <NewsEach
+                                news={news}
+                            />
                         )
                     }
                 </div>
